@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.cvergara.department.service.dto.DepartmentDto;
 import net.cvergara.department.service.entity.Department;
 import net.cvergara.department.service.exception.ResourceNotFoundException;
+import net.cvergara.department.service.mapper.DepartmentMapper;
 import net.cvergara.department.service.repository.DepartmentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,17 @@ public class ServiceImpl implements DepartmentService{
     @Override
     public DepartmentDto saveDepartmentDto(DepartmentDto departmentDto) {
         //Convert departmentDto to DepartmentJpa entity
-        Department savedDepartment =  modelMapper.map(departmentDto , Department.class) ;
-        departmentRepository.save(savedDepartment) ;
-        return modelMapper.map(savedDepartment , DepartmentDto.class);
+        //Department savedDepartment =  modelMapper.map(departmentDto , Department.class) ;
+
+        Department department = DepartmentMapper.mapToDepartment(departmentDto) ;
+
+        Department savedDepartment = departmentRepository.save(department) ;
+
+        DepartmentDto savedDepartmentDto = DepartmentMapper.mapToDepartmentDto(savedDepartment) ;
+
+        //departmentRepository.save(savedDepartment) ;
+        //return modelMapper.map(savedDepartment , DepartmentDto.class);
+        return savedDepartmentDto ;
 
     }
 
