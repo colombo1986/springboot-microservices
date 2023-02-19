@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import net.cvergara.employee.service.dto.APIResponseDTO;
 import net.cvergara.employee.service.dto.DepartmentDto;
 import net.cvergara.employee.service.dto.EmployeeDto;
+import net.cvergara.employee.service.dto.OrganizationDto;
 import net.cvergara.employee.service.entity.Employee;
 import net.cvergara.employee.service.exception.ResourceNotFoundException;
 import net.cvergara.employee.service.repository.EmployeeRepository;
@@ -59,11 +60,18 @@ public class EmployeeServiceImpl implements EmployeeService{
                                         .block() ;
 
           // DepartmentDto departmentDto =  apiClient.getDepartment(employee.getDepartmentCode()) ;
+
+         OrganizationDto organizationDto = webClient.get().uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+                 .retrieve()
+                 .bodyToMono(OrganizationDto.class)
+                 .block() ;
+
            EmployeeDto employeeDto = modelMapper.map(employee , EmployeeDto.class);
            APIResponseDTO apiResponseDTO =  new APIResponseDTO() ;
 
          apiResponseDTO.setDepartment(departmentDto);
-         apiResponseDTO.setEmployeeDto(employeeDto);
+         apiResponseDTO.setEmployee(employeeDto);
+         apiResponseDTO.setOrganization(organizationDto);
 
          return apiResponseDTO ;
 
@@ -87,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         APIResponseDTO apiResponseDTO =  new APIResponseDTO() ;
 
         apiResponseDTO.setDepartment(departmentDto);
-        apiResponseDTO.setEmployeeDto(employeeDto);
+        apiResponseDTO.setEmployee(employeeDto);
 
         return apiResponseDTO ;
 
