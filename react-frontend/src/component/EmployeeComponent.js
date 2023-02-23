@@ -73,4 +73,6 @@ class EmployeeComponent extends Component {
     }
 }
 
+
 export default EmployeeComponent;
+
