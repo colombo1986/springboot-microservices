@@ -1,11 +1,15 @@
 package net.cvergara.organizationservice.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
+@Schema(
+        description = "Organization Model Information"
+)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -13,9 +17,13 @@ import java.time.LocalDateTime;
 public class OrganizationDto {
 
     private Long id ;
+    @Schema(description = "Organization name")
     private String organizationName ;
+    @Schema(description = "Organization description")
     private String organizationDescription ;
+    @Schema(description = "Organization code")
     private String organizationCode ;
+    @Schema(description = "Organization created date")
     private LocalDateTime creationDate ;
 }
 
